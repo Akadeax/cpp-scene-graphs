@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{a700f23a-c090-4248-a94a-799a9832ea26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{4567c604-43e8-4fa3-a410-ec3052370fa2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="structs.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix2x3f.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2f.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="structs.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix2x3f.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2f.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
