@@ -1,22 +1,25 @@
 #pragma once
 class Entity;
 
-using namespace utils;
 #pragma region gameInformation
 // Set your name and group in the title here
-std::string g_WindowTitle{ "Project name - Name, firstname - 1DAExx" };
+extern std::string g_WindowTitle;
 
 // Change the window dimensions here
-float g_WindowWidth{ 500 };
-float g_WindowHeight{ 300 };
+extern float g_WindowWidth;
+extern float g_WindowHeight;
 #pragma endregion gameInformation
 
 
 
 #pragma region ownDeclarations
 // Declare your own global variables here
-Entity* g_pPlayer;
-Entity* g_pPlayerGun;
+extern Entity* g_pPlayer;
+extern Entity* g_pPlayerGun;
+//Entity* g_pPlayerGun;
+
+extern float g_Time;
+
 // Declare your own functions here
 
 #pragma endregion ownDeclarations

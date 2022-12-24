@@ -15,6 +15,10 @@ struct Vector2f
 
 	Point2f ToPoint2f() const;
 
+	bool operator==(const Vector2f& other) const;
 	Vector2f operator+(const Vector2f& other) const;
+	Vector2f operator-(const Vector2f& other) const;
 	void operator+=(const Vector2f& other);
+	Vector2f operator*(float scalar) const;
+
 };

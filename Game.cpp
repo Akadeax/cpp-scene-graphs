@@ -4,47 +4,42 @@
 #include <iostream>
 
 #include "Entity.h"
-#include "Matrix2x3f.h"
+#include "Sprite.h"
+
+std::string g_WindowTitle{ "Transformation Shenanigans - Nellessen, Patrick - 1DAE12" };
+
+float g_WindowWidth{ 640 };
+float g_WindowHeight{ 480 };
+
+Entity* g_pPlayer{};
+Entity* g_pPlayerGun{};
+
+float g_Time{};
 
 //Basic game functions
 #pragma region gameFunctions
 void Start()
 {
-	g_pPlayer = new Entity(std::vector<Vector2f>
-	{
-		Vector2f(20, 20),
-		Vector2f(20, -20),
-		Vector2f(-20, -20),
-		Vector2f(-20, 20),
-	});
-
-	g_pPlayer->Translate(Vector2f(100, 100));
-
-	g_pPlayerGun = new Entity(std::vector<Vector2f>
-	{
-		Vector2f(40, 5),
-		Vector2f(40, -5),
-		Vector2f(0, -5),
-		Vector2f(0, 5),
-	}, g_pPlayer);
+	g_pPlayer = new Entity(new Sprite("Resources/box.png"));
+	g_pPlayerGun = new Entity(new Sprite("Resources/box.png", 0.3f, Vector2f(0, 0.5f)), g_pPlayer);
+	g_pPlayerGun->SetScale(Vector2f(1.5f, 0.4f));
+	g_pPlayer->Translate(Vector2f(g_WindowWidth / 2, g_WindowHeight / 2));
 }
 
 void Draw()
 {
-	ClearBackground();
+	utils::ClearBackground();
 
-	SetColor(1, 1, 1, 1);
 	g_pPlayer->Draw();
-	SetColor(0, 0, 1, 1);
 	g_pPlayerGun->Draw();
-
 }
 
 void Update(float deltaTime)
 {
-	g_pPlayer->Rotate(45 * (g_Pi / 180) * deltaTime);
-	g_pPlayerGun->Rotate(45 * (g_Pi / 180) * deltaTime);
+	g_Time += deltaTime;
+	//g_pPlayer->Rotate(deltaTime);
 }
+
 
 void End()
 {
@@ -78,8 +73,10 @@ void OnKeyUpEvent(SDL_Keycode key)
 
 void OnMouseMotionEvent(const SDL_MouseMotionEvent& e)
 {
-	//std::cout << "  [" << e.x << ", " << e.y << "]\n";
-	//Point2f mousePos{ float( e.x ), float( g_WindowHeight - e.y ) };
+	Vector2f mousePos{ Vector2f(static_cast<float>(e.x), g_WindowHeight - static_cast<float>(e.y)) };
+
+	Vector2f playerToMouse{ mousePos - g_pPlayer->GetWorldPosition() };
+	g_pPlayerGun->SetLocalRotation(atan2f(playerToMouse.y, playerToMouse.x));
 }
 
 void OnMouseDownEvent(const SDL_MouseButtonEvent& e)

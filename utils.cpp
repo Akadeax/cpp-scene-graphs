@@ -1,9 +1,8 @@
 #include "pch.h"
-//#define _USE_MATH_DEFINES
-//#include <cmath>
-#include <algorithm>
 #include <iostream>
 #include "utils.h"
+
+#include "Matrix2x3f.h"
 
 namespace utils
 {
@@ -212,8 +211,6 @@ namespace utils
 		FillArc(center.x, center.y, radX, radY, fromAngle, tillAngle);
 	}
 
-
-
 	void DrawPolygon(const std::vector<Point2f>& vertices, bool closed, float lineWidth)
 	{
 		DrawPolygon(vertices.data(), vertices.size(), closed, lineWidth);
@@ -398,17 +395,16 @@ namespace utils
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}
 
-	void DeleteTexture(Texture& texture)
+	void DeleteTexture(const Texture& texture)
 	{
 		glDeleteTextures(1, &texture.id);
 	}
 
 	void DrawTexture(const Texture& texture, const Point2f& dstBottomLeft, const Rectf& srcRect)
 	{
-		Rectf dstRect{ dstBottomLeft.x, dstBottomLeft.y, srcRect.width, srcRect.height };
+		const Rectf dstRect{ dstBottomLeft.x, dstBottomLeft.y, srcRect.width, srcRect.height };
 		DrawTexture(texture, dstRect, srcRect);
 	}
-
 
 	void DrawTexture(const Texture& texture, const Rectf& dstRect, const Rectf& srcRect)
 	{
@@ -489,6 +485,92 @@ namespace utils
 		}
 		glDisable(GL_TEXTURE_2D);
 
+	}
+
+	void DrawTexture(const Texture& texture, const Vector2f& pivot, const Vector2f& position, float angleRad, const Vector2f& scale, const Rectf& srcRect)
+	{
+		// Determine texture coordinates using srcRect
+		float textureLeft;
+		float textureRight;
+		float textureTop;
+		float textureBottom;
+
+		if (!(srcRect.width > 0.0f && srcRect.height > 0.0f)) // No srcRect specified
+		{
+			// Use complete texture
+			textureLeft = 0.0f;
+			textureRight = 1.0f;
+			textureTop = 0.0f;
+			textureBottom = 1.0f;
+
+		}
+		else // srcRect specified
+		{
+			// Convert to the range [0.0, 1.0]
+			textureLeft = srcRect.left / texture.width;
+			textureRight = (srcRect.left + srcRect.width) / texture.width;
+			textureTop = (srcRect.bottom - srcRect.height) / texture.height;
+			textureBottom = srcRect.bottom / texture.height;
+		}
+
+		// Tell opengl which texture we will use
+		glBindTexture(GL_TEXTURE_2D, texture.id);
+		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+		// set the texture mode https://open.gl/textures
+		constexpr float color[4] = { 1.0f, 0.0f, 1.0f, 1.0f };
+		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+
+		const Vector2f srcVertices[4]
+		{
+			Vector2f(textureLeft, textureBottom),
+			Vector2f(textureLeft, textureTop),
+			Vector2f(textureRight, textureTop),
+			Vector2f(textureRight, textureBottom),
+		};
+
+		// Unpivoted points ready for transformation
+		Vector2f displayVertices[4]
+		{
+			Vector2f(0, 0),
+			Vector2f(0, texture.height),
+			Vector2f(texture.width, texture.height),
+			Vector2f(texture.width, 0),
+		};
+
+		// Transforming
+		const Matrix2x3f pivoting{ Matrix2x3f::TranslationMatrix(Vector2f(-texture.width * pivot.x, -texture.height * pivot.y)) };
+		const Matrix2x3f scaling{ Matrix2x3f::ScalingMatrix(scale) };
+		const Matrix2x3f rotating{ Matrix2x3f::RotationMatrix(angleRad) };
+		const Matrix2x3f translating{ Matrix2x3f::TranslationMatrix(position) };
+
+		for(int i{ 0 }; i < 4; ++i)
+		{
+			displayVertices[i] = pivoting.Apply(displayVertices[i]);
+			displayVertices[i] = scaling.Apply(displayVertices[i]);
+			displayVertices[i] = rotating.Apply(displayVertices[i]);
+			displayVertices[i] = translating.Apply(displayVertices[i]);
+		}
+
+		// Draw
+		glEnable(GL_TEXTURE_2D);
+		{
+			glBegin(GL_QUADS);
+			{
+				for(int i{ 0 }; i < 4; ++i)
+				{
+					glTexCoord2f(srcVertices[i].x, srcVertices[i].y);
+					glVertex2f(displayVertices[i].x, displayVertices[i].y);
+				}
+
+			}
+			glEnd();
+		}
+		glDisable(GL_TEXTURE_2D);
+
+		//std::cout << "REALITY: " << Vector2f(position.x * scale.x, position.y * scale.y).ToString() << '\n';
 	}
 #pragma endregion textureImplementations
 

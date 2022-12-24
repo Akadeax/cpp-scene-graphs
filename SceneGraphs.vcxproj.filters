@@ -40,6 +40,9 @@
     <ClCompile Include="Vector2f.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -65,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="Vector2f.h">
       <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

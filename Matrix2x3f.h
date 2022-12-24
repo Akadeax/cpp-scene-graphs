@@ -9,15 +9,21 @@ struct Matrix2x3f
 
 	Vector2f e1{}, e2{}, translation{};
 
-	Vector2f Transform(const Vector2f& other) const;
+	Vector2f Apply(const Vector2f& other) const;
+	Matrix2x3f Apply(const Matrix2x3f& other) const;
 
 	std::string ToString() const;
+
+	static Matrix2x3f Identity();
 
 	static Matrix2x3f TranslationMatrix(Vector2f delta);
 	static Matrix2x3f TranslationMatrix(float dx, float dy);
 
 	static Matrix2x3f RotationMatrix(float theta);
 
+	static Matrix2x3f ScalingMatrix(Vector2f scale);
 	static Matrix2x3f ScalingMatrix(float scaleX, float scaleY);
+
+	bool operator==(const Matrix2x3f& other) const;
 };
 

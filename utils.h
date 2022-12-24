@@ -2,6 +2,8 @@
 #include "structs.h"
 #include <vector>
 
+#include "Vector2f.h"
+
 namespace utils
 {
 
@@ -66,7 +68,8 @@ namespace utils
 	void TextureFromSurface(const SDL_Surface* pSurface, Texture& textureData);
 	void DrawTexture(const Texture& texture, const Point2f& dstBottomLeft, const Rectf& srcRect = {});
 	void DrawTexture(const Texture& texture, const Rectf& dstRect, const Rectf& srcRect = {});
-	void DeleteTexture(Texture& texture);
+	void DrawTexture(const Texture& texture, const Vector2f& pivot, const Vector2f& position, float angleRad, const Vector2f& scale, const Rectf& srcRect = {});
+	void DeleteTexture(const Texture& texture);
 #pragma endregion TextureFunctionality
 
 #pragma region CollisionFunctionality

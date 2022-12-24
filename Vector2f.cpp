@@ -32,13 +32,28 @@ Point2f Vector2f::ToPoint2f() const
 	return Point2f(x, y);
 }
 
+bool Vector2f::operator==(const Vector2f& other) const
+{
+	return x == other.x && y == other.y;
+}
+
 Vector2f Vector2f::operator+(const Vector2f& other) const
 {
 	return Vector2f(x + other.x, y + other.y);
+}
+
+Vector2f Vector2f::operator-(const Vector2f& other) const
+{
+	return Vector2f(x - other.x, y - other.y);
 }
 
 void Vector2f::operator+=(const Vector2f& other)
 {
 	x += other.x;
 	y += other.y;
+}
+
+Vector2f Vector2f::operator*(float scalar) const
+{
+	return Vector2f(x * scalar, y * scalar);
 }
