@@ -12,22 +12,29 @@ public:
 
 	void Draw() const;
 
-	void Translate(Vector2f delta);
-	void SetLocalPosition(Vector2f newPos);
 
-	void Rotate(float theta);
-	void SetLocalRotation(float newRotation);
 
-	void Scale(Vector2f scaleFactor);
-	void SetScale(Vector2f newScale);
 
+	// Position
 	Vector2f GetLocalPosition() const;
-	Vector2f GetWorldPosition() const;
+	void SetLocalPosition(Vector2f newPos);
+	void Translate(Vector2f delta);
 
+	Vector2f GetWorldPosition() const;
+	void SetWorldPosition(Vector2f worldPos);
+
+	// Rotation
 	float GetLocalRotation() const;
+	void SetLocalRotation(float newRotation);
+	void Rotate(float theta);
+
 	float GetWorldRotation() const;
 
+	// Scale
 	Vector2f GetLocalScale() const;
+	void SetLocalScale(Vector2f newScale);
+	void Scale(Vector2f scaleFactor);
+
 
 	Sprite* GetSprite() const;
 

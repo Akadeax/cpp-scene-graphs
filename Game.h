@@ -1,4 +1,5 @@
 #pragma once
+class Camera;
 class Entity;
 
 #pragma region gameInformation
@@ -8,19 +9,25 @@ extern std::string g_WindowTitle;
 // Change the window dimensions here
 extern float g_WindowWidth;
 extern float g_WindowHeight;
+
 #pragma endregion gameInformation
 
 
 
 #pragma region ownDeclarations
-// Declare your own global variables here
+extern Camera* g_pCamera;
+
 extern Entity* g_pPlayer;
 extern Entity* g_pPlayerGun;
-//Entity* g_pPlayerGun;
+
+extern Entity* g_pObstacle;
+
+extern Vector2f g_MouseScreenPos;
+extern Vector2f g_MouseWorldPos;
 
 extern float g_Time;
 
-// Declare your own functions here
+void DrawWorldLine(Vector2f p1, Vector2f p2);
 
 #pragma endregion ownDeclarations
 

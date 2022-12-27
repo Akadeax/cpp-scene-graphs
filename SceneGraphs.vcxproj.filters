@@ -43,6 +43,7 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -72,5 +73,6 @@
     <ClInclude Include="Sprite.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h" />
   </ItemGroup>
 </Project>

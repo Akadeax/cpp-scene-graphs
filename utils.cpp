@@ -2,6 +2,8 @@
 #include <iostream>
 #include "utils.h"
 
+#include "Camera.h"
+#include "Game.h"
 #include "Matrix2x3f.h"
 
 namespace utils
@@ -546,12 +548,16 @@ namespace utils
 		const Matrix2x3f rotating{ Matrix2x3f::RotationMatrix(angleRad) };
 		const Matrix2x3f translating{ Matrix2x3f::TranslationMatrix(position) };
 
+		const Matrix2x3f view{ g_pCamera->GetViewTransformation() };
+
 		for(int i{ 0 }; i < 4; ++i)
 		{
 			displayVertices[i] = pivoting.Apply(displayVertices[i]);
 			displayVertices[i] = scaling.Apply(displayVertices[i]);
 			displayVertices[i] = rotating.Apply(displayVertices[i]);
 			displayVertices[i] = translating.Apply(displayVertices[i]);
+
+			displayVertices[i] = view.Apply(displayVertices[i]);
 		}
 
 		// Draw

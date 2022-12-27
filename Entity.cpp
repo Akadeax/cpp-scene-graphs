@@ -53,7 +53,7 @@ void Entity::Scale(Vector2f scaleFactor)
 	m_LocalScale = Vector2f(m_LocalScale.x * scaleFactor.x, m_LocalScale.y * scaleFactor.y);
 }
 
-void Entity::SetScale(Vector2f newScale)
+void Entity::SetLocalScale(Vector2f newScale)
 {
 	m_LocalScale = newScale;
 }
@@ -110,6 +110,10 @@ Vector2f Entity::GetWorldPosition() const
 	}
 
 	return transformedPosition;
+}
+
+void Entity::SetWorldPosition(Vector2f worldPos)
+{
 }
 
 Sprite* Entity::GetSprite() const
